@@ -1,0 +1,99 @@
+[gd_scene load_steps=2 format=3 uid="uid://brshdpxgmrpcy"]
+
+[ext_resource type="Script" uid="uid://c7rgy1fetbfeq" path="res://addons/tilde/scripts/console_input.gd" id="1_xhewui"]
+
+[node name="ActionTemplates" type="Node"]
+
+[node name="Category" type="Button" parent="."]
+offset_right = 8.0
+offset_bottom = 8.0
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0.701961, 0.701961, 0.701961, 1)
+text = "--- Category ---"
+flat = true
+
+[node name="Button" type="Button" parent="."]
+offset_top = 37.0
+offset_right = 161.0
+offset_bottom = 75.0
+focus_mode = 0
+text = "Action Button"
+
+[node name="Toggle" type="CheckButton" parent="."]
+offset_top = 72.0
+offset_right = 200.0
+offset_bottom = 110.0
+focus_mode = 0
+text = "Toggle Option"
+
+[node name="Input" type="HBoxContainer" parent="."]
+offset_top = 232.0
+offset_right = 222.0
+offset_bottom = 272.0
+
+[node name="Label" type="Label" parent="Input"]
+layout_mode = 2
+text = "Label:"
+
+[node name="LineEdit" type="LineEdit" parent="Input"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Value..."
+script = ExtResource("1_xhewui")
+
+[node name="Button" type="Button" parent="Input"]
+layout_mode = 2
+focus_mode = 0
+text = "Set"
+
+[node name="Dropdown" type="HBoxContainer" parent="."]
+offset_top = 192.0
+offset_right = 144.0
+offset_bottom = 232.0
+
+[node name="Label" type="Label" parent="Dropdown"]
+layout_mode = 2
+text = "Label:"
+
+[node name="OptionButton" type="OptionButton" parent="Dropdown"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+
+[node name="Button" type="Button" parent="Dropdown"]
+layout_mode = 2
+focus_mode = 0
+text = "Go"
+
+[node name="Slider" type="HBoxContainer" parent="."]
+offset_top = 152.0
+offset_right = 77.0
+offset_bottom = 192.0
+
+[node name="Label" type="Label" parent="Slider"]
+layout_mode = 2
+text = "Label:"
+
+[node name="HSlider" type="HSlider" parent="Slider"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+
+[node name="Color" type="HBoxContainer" parent="."]
+offset_top = 112.0
+offset_right = 122.0
+offset_bottom = 152.0
+
+[node name="Label" type="Label" parent="Color"]
+layout_mode = 2
+text = "Label:"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="Color"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Pick"
+color = Color(1, 1, 1, 1)
+edit_alpha = false

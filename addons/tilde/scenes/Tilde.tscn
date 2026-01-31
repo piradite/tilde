@@ -1,0 +1,352 @@
+[gd_scene load_steps=4 format=3 uid="uid://q7w8q1prg67e"]
+
+[ext_resource type="Script" uid="uid://vxp704cs7cv8" path="res://addons/tilde/scripts/tilde_console.gd" id="1_rjeui"]
+[ext_resource type="Script" uid="uid://c7rgy1fetbfeq" path="res://addons/tilde/scripts/console_input.gd" id="2_frjoee"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.1, 0.1, 0.1, 0.95)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.3, 0.3, 0.3, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Tilde" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_rjeui")
+
+[node name="BackgroundBlocker" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.235294)
+
+[node name="ConsoleWindow" type="Panel" parent="."]
+clip_contents = true
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 750.0
+offset_bottom = 550.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+
+[node name="WindowMargin" type="MarginContainer" parent="ConsoleWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MainVBox" type="VBoxContainer" parent="ConsoleWindow/WindowMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="TitleBar" type="Panel" parent="ConsoleWindow/WindowMargin/MainVBox"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="HBox" type="HBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/TitleBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="ConsoleWindow/WindowMargin/MainVBox/TitleBar/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = " Console (~)"
+vertical_alignment = 1
+
+[node name="CloseBtn" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/TitleBar/HBox"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+focus_mode = 0
+text = "X"
+flat = true
+
+[node name="Tabs" type="HBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox"]
+layout_mode = 2
+
+[node name="BtnTerminal" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/Tabs"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+button_pressed = true
+text = "Terminal"
+
+[node name="BtnActions" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/Tabs"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+text = "Actions"
+
+[node name="BtnInspector" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/Tabs"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+text = "Inspector"
+
+[node name="BtnSettings" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/Tabs"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+toggle_mode = true
+text = "Tilde"
+
+[node name="ContentContainer" type="MarginContainer" parent="ConsoleWindow/WindowMargin/MainVBox"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="TerminalView" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HistorySearch" type="LineEdit" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/TerminalView"]
+visible = false
+layout_mode = 2
+placeholder_text = "Search History..."
+clear_button_enabled = true
+
+[node name="History" type="RichTextLabel" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/TerminalView"]
+layout_mode = 2
+size_flags_vertical = 3
+focus_mode = 0
+bbcode_enabled = true
+scroll_following = true
+
+[node name="Suggestions" type="ItemList" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/TerminalView"]
+visible = false
+layout_mode = 2
+same_column_width = true
+
+[node name="Input" type="LineEdit" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/TerminalView"]
+layout_mode = 2
+placeholder_text = "Type a command..."
+keep_editing_on_text_submit = true
+caret_blink = true
+script = ExtResource("2_frjoee")
+
+[node name="ActionsView" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionSearch" type="LineEdit" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/ActionsView"]
+visible = false
+layout_mode = 2
+placeholder_text = "Filter Actions..."
+clear_button_enabled = true
+
+[node name="Scroll" type="ScrollContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/ActionsView"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ActionList" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/ActionsView/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InspectorView" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Search" type="LineEdit" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView"]
+layout_mode = 2
+placeholder_text = "Search nodes..."
+clear_button_enabled = true
+
+[node name="Tree" type="Tree" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView"]
+layout_mode = 2
+size_flags_vertical = 3
+allow_reselect = true
+hide_root = true
+
+[node name="Details" type="PanelContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView"]
+layout_mode = 2
+
+[node name="DetailsVBox" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/Details"]
+layout_mode = 2
+
+[node name="NodeInfo" type="Label" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/Details/DetailsVBox"]
+layout_mode = 2
+text = "Select a node"
+autowrap_mode = 3
+
+[node name="InspectorActions" type="HBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/Details/DetailsVBox"]
+layout_mode = 2
+
+[node name="ToggleVisible" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/Details/DetailsVBox/InspectorActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Toggle Visibility"
+
+[node name="FreeNode" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/Details/DetailsVBox/InspectorActions"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Free Node"
+
+[node name="InspectorControls" type="HBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView"]
+layout_mode = 2
+
+[node name="RefreshBtn" type="Button" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/InspectorView/InspectorControls"]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "Refresh Tree"
+
+[node name="SettingsView" type="ScrollContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer"]
+visible = false
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SettingsList" type="VBoxContainer" parent="ConsoleWindow/WindowMargin/MainVBox/ContentContainer/SettingsView"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ResizeHandles" type="Control" parent="ConsoleWindow"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="R_Top" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = -5.0
+offset_right = -10.0
+offset_bottom = 5.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 9
+color = Color(1, 1, 1, 0)
+
+[node name="R_Bottom" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -5.0
+offset_right = -10.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 9
+color = Color(1, 1, 1, 0)
+
+[node name="R_Left" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 10.0
+offset_right = 5.0
+offset_bottom = -10.0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+color = Color(1, 1, 1, 0)
+
+[node name="R_Right" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 10.0
+offset_right = 5.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+color = Color(1, 1, 1, 0)
+
+[node name="R_TL" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 10.0
+offset_bottom = 10.0
+mouse_default_cursor_shape = 12
+color = Color(1, 1, 1, 0)
+
+[node name="R_TR" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -10.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 10.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11
+color = Color(1, 1, 1, 0)
+
+[node name="R_BL" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 5.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+color = Color(1, 1, 1, 0)
+
+[node name="R_BR" type="ColorRect" parent="ConsoleWindow/ResizeHandles"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+color = Color(1, 1, 1, 0)
+
+[node name="PerfOverlay" type="Label" parent="."]
+visible = false
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 210.0
+offset_bottom = 110.0
+mouse_filter = 0
+mouse_default_cursor_shape = 13
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+text = "FPS: 60"
